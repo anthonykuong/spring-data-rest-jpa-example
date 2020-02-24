@@ -1,48 +1,27 @@
 package com.techprimers.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 @Entity
+@Data
+@Slf4j
 public class User {
 
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(name="teamname")
     private String teamName;
+    @Column(nullable = false)
     private Integer salary;
 
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
-    }
+  
 }
