@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,8 +28,15 @@ import com.techprimers.controller.UsersController;
 import com.techprimers.model.User;
 import com.techprimers.repository.UserJpaRespository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(UsersController.class)
+//@SpringBootTest(
+//		classes = SpringBootDemoApplication.class,
+//		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+//)
+@Slf4j
 public class SpringBootDemoApplicationTests {
 	private User user;
 	
@@ -50,6 +58,7 @@ public class SpringBootDemoApplicationTests {
 
 	@Test
 	public void userCreationTest() throws Exception {
+		 log.info("********************userCreationTest************");
 		when(userJpaRespository.findByName(user.getName())).thenReturn(user);
 		ObjectMapper mapper = new ObjectMapper();
 		String transactionString = mapper.writeValueAsString(user);
@@ -63,6 +72,7 @@ public class SpringBootDemoApplicationTests {
 
 	@Test
 	public void findAllUsersTest() throws Exception {
+		 log.info("********************findAllUsersTest************");
 		List<User> users = new ArrayList<>();
 		users.add(user);
 
@@ -75,6 +85,8 @@ public class SpringBootDemoApplicationTests {
 
 	@Test
 	public void findUserByNameTest() throws Exception {
+		 log.info("********************findUserByNameTest************");
+			
 		when(userJpaRespository.findByName(user.getName())).thenReturn(user);
 
 		MvcResult result = mockMvc.perform(get("/users/{name}", "Virat")).andExpect(status().isOk()).andReturn();
@@ -85,6 +97,8 @@ public class SpringBootDemoApplicationTests {
 	
 	@Test
 	public void findUserByNameWithWrongNameTest() throws Exception {
+		 log.info("********************findUserByNameWithWrongNameTest************");
+			
 		when(userJpaRespository.findByName(user.getName())).thenReturn(user);
 
 		MvcResult result = mockMvc.perform(get("/users/{name}", "Rohit")).andExpect(status().isOk()).andReturn();

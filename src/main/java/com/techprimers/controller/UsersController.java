@@ -1,15 +1,26 @@
 package com.techprimers.controller;
 
+
+import com.techprimers.configs.StaticAppConfigs;
 import com.techprimers.model.User;
 import com.techprimers.repository.UserJpaRespository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@EnableConfigurationProperties(StaticAppConfigs.class)
+@Slf4j
 public class UsersController {
+	
+	  @Autowired
+	StaticAppConfigs staticAppConfigs;
 
 	/** The JPA repository */
     @Autowired
@@ -22,7 +33,10 @@ public class UsersController {
 	 */
     @GetMapping(value = "/all")
     public List<User> findAll() {
-        return userJpaRespository.findAll();
+    	log.info("env:" + staticAppConfigs.getEnv());
+    	log.info("version:" + staticAppConfigs.getVersion());
+    	log.info("domainList:" + staticAppConfigs.getDomainList());
+    	return userJpaRespository.findAll();
     }
 
     /**
